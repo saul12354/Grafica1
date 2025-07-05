@@ -9,16 +9,29 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 40px;
+      /* Optional: if you want a fully transparent body background */
+      background-color: transparent; 
     }
-    canvas {
+    .chart-container {
       max-width: 500px;
       margin: auto;
+      background-color: transparent; /* Ensures the container itself is transparent */
+    }
+    .message {
+      text-align: center;
+      margin-bottom: 20px; /* Adds some space between the message and the chart */
+      font-size: 1.2em; /* Makes the text a bit larger */
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h2>Distribución de IMC</h2>
-  <canvas id="graficaPastel"></canvas>
+  <div class="message">
+    La siguiente gráfica es un registro de IMC de nuestros usuarios
+  </div>
+  <div class="chart-container">
+    <canvas id="graficaPastel"></canvas>
+  </div>
 
   <script>
     // Datos de ejemplo (puedes reemplazarlos con datos de CloudDB)
@@ -61,11 +74,16 @@
           tooltip: {
             callbacks: {
               label: function(context) {
-                return `${context.label}: ${context.parsed}%`;
+                // Calculate percentage for the tooltip
+                const total = context.dataset.data.reduce((acc, value) => acc + value, 0);
+                const percentage = ((context.parsed / total) * 100).toFixed(1); // One decimal place
+                return `${context.label}: ${percentage}%`;
               }
             }
           }
-        }
+        },
+        // Set chart background to transparent
+        backgroundColor: 'transparent' 
       }
     });
   </script>
