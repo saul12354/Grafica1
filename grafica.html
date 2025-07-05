@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gráfica de Pastel - IMC</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    canvas {
+      max-width: 500px;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <h2>Distribución de IMC</h2>
+  <canvas id="graficaPastel"></canvas>
+
+  <script>
+    // Datos de ejemplo (puedes reemplazarlos con datos de CloudDB)
+    const datosIMC = {
+      Bajo: 10,
+      Normal: 45,
+      Sobrepeso: 25,
+      Obesidad: 20
+    };
+
+    const ctx = document.getElementById('graficaPastel').getContext('2d');
+    const graficaPastel = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Bajo', 'Normal', 'Sobrepeso', 'Obesidad'],
+        datasets: [{
+          label: 'Porcentaje',
+          data: [
+            datosIMC.Bajo,
+            datosIMC.Normal,
+            datosIMC.Sobrepeso,
+            datosIMC.Obesidad
+          ],
+          backgroundColor: [
+            '#4FC3F7', // Azul claro
+            '#81C784', // Verde
+            '#FFD54F', // Amarillo
+            '#E57373'  // Rojo claro
+          ],
+          borderColor: '#fff',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return `${context.label}: ${context.parsed}%`;
+              }
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
